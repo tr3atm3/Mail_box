@@ -1,6 +1,6 @@
 import React, { useRef, useState } from "react";
 import { useDispatch } from "react-redux";
-import { saveTokenId } from "../../store/AuthSlice";
+import { saveUserInfo } from "../../store/AuthSlice";
 import { useNavigate } from "react-router-dom";
 
 const Authentication = () => {
@@ -31,7 +31,7 @@ const Authentication = () => {
       if (!response.ok) {
         throw new Error(data.error.message);
       }
-      dispatch(saveTokenId(data.idToken));
+      dispatch(saveUserInfo({ tokenId: data.idToken, email: data.email }));
       console.log("User is Succesfully logged In");
       navigate("/");
     } catch (err) {
@@ -59,7 +59,7 @@ const Authentication = () => {
       if (!response.ok) {
         throw new Error(data.error.message);
       }
-      dispatch(saveTokenId(data.idToken));
+      dispatch(saveUserInfo({ tokenId: data.idToken, email: data.email }));
       console.log("User is Succesfully logged In");
       navigate("/");
     } catch (err) {
