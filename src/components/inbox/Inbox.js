@@ -1,14 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { Route, Router, Routes, useNavigate } from "react-router-dom";
 import MailsBox from "./MailsBox";
+import Mail from "./Mail";
 
 const Inbox = () => {
   const tokenId = useSelector((store) => store.auth.tokenId);
   const email = useSelector((store) => store.auth.email);
   const [mails, setMails] = useState([]);
   const navigate = useNavigate();
-  console.log(mails);
+
   useEffect(() => {
     if (!tokenId) {
       navigate("/auth");
@@ -20,12 +21,12 @@ const Inbox = () => {
   };
 
   const gettingMails = async () => {
-    const dummyEmail = email
-      .toLowerCase()
-      .split("")
-      .filter((x) => x.charCodeAt(0) >= 97 && x.charCodeAt(0) <= 122)
-      .join("");
     try {
+      const dummyEmail = email
+        .toLowerCase()
+        .split("")
+        .filter((x) => x.charCodeAt(0) >= 97 && x.charCodeAt(0) <= 122)
+        .join("");
       const response = await fetch(
         `https://react-deployment-demo-f24d5-default-rtdb.asia-southeast1.firebasedatabase.app/${dummyEmail}/Inbox.json`
       );
@@ -42,6 +43,7 @@ const Inbox = () => {
             content: value.content,
             from: value.from,
             subject: value.subject,
+            isRead: value.isRead,
           };
           newArray.push(newObj);
         }

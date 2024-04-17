@@ -56,6 +56,7 @@ const Home = () => {
       from: email,
       subject: subject,
       content: editorState.blocks,
+      isRead: false,
     };
     const dummyEmail = to
       .toLowerCase()

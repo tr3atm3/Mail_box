@@ -3,6 +3,7 @@ import Authentication from "./components/SignUp/Authentication";
 import Navbar from "./components/navbar/Navbar";
 import Home from "./components/home/Home";
 import Inbox from "./components/inbox/Inbox";
+import Mail from "./components/inbox/Mail";
 
 function App() {
   return (
@@ -29,6 +30,10 @@ export const appRouter = createBrowserRouter([
       {
         path: "/inbox",
         element: <Inbox />,
+      },
+      {
+        path: "/mail/:mailId",
+        element: <Mail />,
       },
     ],
   },
