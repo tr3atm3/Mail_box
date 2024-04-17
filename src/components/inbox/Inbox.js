@@ -56,13 +56,14 @@ const Inbox = () => {
   useEffect(() => {
     gettingMails();
   }, []);
+  const unreadMails = mails.filter((mail) => mail.isRead === false);
   return (
     <div className="m-4 flex ">
       <div className="border-r pr-2">
         <button className="bg-blue-500 py-2 px-6 mb-6" onClick={handleCompose}>
           Compose
         </button>
-        <p>Inbox</p>
+        <p>Inbox {unreadMails.length}</p>
         <p>Sent</p>
       </div>
       <MailsBox mails={mails} />
