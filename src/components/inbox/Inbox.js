@@ -1,0 +1,71 @@
+import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import MailsBox from "./MailsBox";
+
+const Inbox = () => {
+  const tokenId = useSelector((store) => store.auth.tokenId);
+  const email = useSelector((store) => store.auth.email);
+  const [mails, setMails] = useState([]);
+  const navigate = useNavigate();
+  console.log(mails);
+  useEffect(() => {
+    if (!tokenId) {
+      navigate("/auth");
+    }
+  }, [tokenId]);
+
+  const handleCompose = () => {
+    navigate("/");
+  };
+
+  const gettingMails = async () => {
+    const dummyEmail = email
+      .toLowerCase()
+      .split("")
+      .filter((x) => x.charCodeAt(0) >= 97 && x.charCodeAt(0) <= 122)
+      .join("");
+    try {
+      const response = await fetch(
+        `https://react-deployment-demo-f24d5-default-rtdb.asia-southeast1.firebasedatabase.app/${dummyEmail}/Inbox.json`
+      );
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error);
+      }
+      let newArray = [];
+      if (data) {
+        for (let [key, value] of Object.entries(data)) {
+          const newObj = {
+            key: key,
+            content: value.content,
+            from: value.from,
+            subject: value.subject,
+          };
+          newArray.push(newObj);
+        }
+      }
+      setMails(newArray);
+    } catch (err) {
+      alert(err);
+    }
+  };
+  useEffect(() => {
+    gettingMails();
+  }, []);
+  return (
+    <div className="m-4 flex ">
+      <div className="border-r pr-2">
+        <button className="bg-blue-500 py-2 px-6 mb-6" onClick={handleCompose}>
+          Compose
+        </button>
+        <p>Inbox</p>
+        <p>Sent</p>
+      </div>
+      <MailsBox mails={mails} />
+    </div>
+  );
+};
+
+export default Inbox;

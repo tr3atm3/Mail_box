@@ -11,7 +11,7 @@ const Home = () => {
 
   const tokenId = useSelector((store) => store.auth.tokenId);
   const navigate = useNavigate();
-  console.log(editorState);
+
   useEffect(() => {
     if (!tokenId) {
       navigate("/auth");
@@ -87,6 +87,9 @@ const Home = () => {
   const handleSendBtn = () => {
     mailSendFrom();
     mailSendTo();
+    setTo("");
+    setSubject("");
+    setEditorState("");
   };
   return (
     <div className="mt-2 px-4">
