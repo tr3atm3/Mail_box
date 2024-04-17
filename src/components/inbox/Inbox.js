@@ -20,6 +20,10 @@ const Inbox = () => {
     navigate("/");
   };
 
+  const handleDelete = (id) => {
+    setMails((prev) => prev.filter((mail) => mail.key !== id));
+  };
+
   const gettingMails = async () => {
     try {
       const dummyEmail = email
@@ -66,7 +70,7 @@ const Inbox = () => {
         <p>Inbox {unreadMails.length}</p>
         <p>Sent</p>
       </div>
-      <MailsBox mails={mails} />
+      <MailsBox mails={mails} handleDelete={handleDelete} />
     </div>
   );
 };
