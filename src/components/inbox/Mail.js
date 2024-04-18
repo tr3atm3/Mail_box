@@ -29,7 +29,7 @@ const Mail = () => {
   }, []);
   return (
     <div className="m-8">
-      {/* <p className="mb-4">From: {info.from || info.to}</p> */}
+      {/* <p className="mb-4">From: {info.from || info.to}</p>  */}
       <p className="mb-4">Subject: {info.subject}</p>
       <p>{info?.content?.map((info) => info.text).join("")}</p>
     </div>

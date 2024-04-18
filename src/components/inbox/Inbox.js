@@ -92,7 +92,13 @@ const Inbox = () => {
     }
   };
   useEffect(() => {
-    gettingMails();
+    const callingData = setInterval(() => {
+      gettingMails();
+    }, 2000);
+
+    return () => {
+      clearInterval(callingData);
+    };
   }, []);
   const unreadMails = mails.filter((mail) => mail.isRead === false);
   return (
